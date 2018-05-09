@@ -1,0 +1,13 @@
+{
+  "generator-yeogurt": {
+    "config": {
+      "projectName": "momentum-clone",
+      "htmlOption": "nunjucks",
+      "jsPreprocessor": "es6",
+      "cssOption": "sass",
+      "sassSyntax": "scss",
+      "testFramework": "mocha"
+    },
+    "version": "2.0.1"
+  }
+}
