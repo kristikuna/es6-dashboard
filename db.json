@@ -1,0 +1,16 @@
+{
+    "tasks": [
+      {
+        "title": "build a cool to-do list",
+        "id": 1
+      },
+      {
+        "title": "using only es6",
+        "id": 2
+      },
+      {
+        "title": "hello",
+        "id": 3
+      }
+    ]
+  }
