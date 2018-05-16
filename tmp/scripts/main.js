@@ -10254,12 +10254,18 @@ var ToDo = function () {
     _classCallCheck(this, ToDo);
 
     var url = 'http://localhost:4000/tasks';
-    var taskArr = [];
-    this.name = 'to-do';
-    console.log('%s module', this.name.toLowerCase());
+    var addNewTask = document.getElementById('addNewTask');
     this.getData(url);
     var list = document.getElementById("list");
+
+    var button = document.getElementById('formSubmitBtn');
+    button.addEventListener('click', function () {
+      var newTask = document.getElementById("newTask").value;
+    });
   }
+
+  //get initial data
+
 
   _createClass(ToDo, [{
     key: 'getData',
@@ -10276,16 +10282,63 @@ var ToDo = function () {
     }
   }, {
     key: 'appendList',
-    value: function appendList(arr) {
+    value: function appendList(arr, newTask) {
+      console.log(newTask);
+      var taskArr = [];
       arr.forEach(function (item) {
-        var newTask = document.createElement('li');
-        list.append(item.title, newTask);
+        // console.log(taskArr)
+        var listItem = document.createElement('li');
+        list.append(item.title, listItem);
+        taskArr.push(item.title);
+        console.log(taskArr);
+      });
+    }
+
+    // newTaskPost(){
+    //   button.addEventListener('click', function(){
+    //     const newTask = document.getElementById("newTask").value;
+    //     // console.log(taskArr)
+    //     console.log(newTask); 
+    //   });
+    // }
+
+  }, {
+    key: 'updateData',
+    value: function updateData(url, newTask) {
+      fetch(url, {
+        method: 'POST',
+        headers: new Headers(),
+        body: JSON.stringify({ title: title })
+      }).then(function (reponse) {
+        return reponse.json();
+      }).then(function (data) {
+        console.log(newTask);
+        console.log(data);
+      }).catch(function (error) {
+        console.log('Error:', error);
+      });
+    }
+
+    //delete task
+
+  }, {
+    key: 'deleteData',
+    value: function deleteData(url, id) {
+      return fetch(url + '/' + id, {
+        method: 'DELETE'
+      }).then(function (reponse) {
+        return response.json();
       });
     }
   }]);
 
   return ToDo;
 }();
+//console.log value from input field
+//update view with value
+//send task to db.json
+//update view with value from db
+
 
 exports.default = ToDo;
 module.exports = exports['default'];
