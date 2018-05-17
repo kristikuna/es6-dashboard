@@ -10257,7 +10257,7 @@ var ToDo = function () {
     var taskArr = [];
     var addNewTask = document.getElementById('addNewTask');
     this.getData(url);
-    var list = document.getElementById("list");
+    this.list = document.getElementById("list");
   }
 
   //get initial data
@@ -10265,14 +10265,16 @@ var ToDo = function () {
 
   _createClass(ToDo, [{
     key: 'getData',
-    value: function getData(url, data) {
+    value: function getData(data) {
       var _this = this;
 
-      fetch(url).then(function (response) {
+      fetch('http://localhost:4000/tasks').then(function (response) {
         return response.json();
       }).then(function (data) {
         _this.watchForSubmit(newTask);
+        // console.log(newTask);
         _this.appendList(data);
+        // console.log(data);
       }).catch(function (error) {
         console.log('Error:', error);
       });
@@ -10280,29 +10282,38 @@ var ToDo = function () {
   }, {
     key: 'appendList',
     value: function appendList(arr) {
+      var _this2 = this;
+
+      console.log(arr);
       arr.forEach(function (item) {
-        // console.log(item)
+        console.log(item);
         var listItem = document.createElement('li');
-        list.append(item.title, listItem);
+        _this2.list.appendChild(listItem);
+        listItem.innerText = item.title;
       });
     }
   }, {
     key: 'updateData',
     value: function updateData(newTask) {
-      var _this2 = this;
+      var _this3 = this;
 
-      fetch('http://localhost:4000/tasks', {
+      console.log(newTask);
+      var postConfig = {
         method: 'POST',
-        headers: new Headers(),
+        headers: {
+          'Accept': 'Application/JSON, Text/Plain, */*',
+          'Content': "Application/JSON"
+        },
         body: JSON.stringify({ title: newTask })
-      }).then(function (reponse) {
+      };
+      fetch('http://localhost:4000/tasks', postConfig).then(function (reponse) {
         return reponse.json();
-      }).then(function (data) {
-        _this2.appendList(data);
-        console.log(data);
-      }).catch(function (error) {
-        console.log('Error:', error);
+      }).then(function (res) {
+        _this3.appendList(newTask);
       });
+      //.catch(error => {
+      //   console.log('Error:', error);
+      // });
     }
 
     //delete task
@@ -10324,22 +10335,31 @@ var ToDo = function () {
   }, {
     key: 'watchForSubmit',
     value: function watchForSubmit(data, newTask) {
-      var _this3 = this;
+      var _this4 = this;
 
       var button = document.getElementById('formSubmitBtn');
       button.addEventListener('click', function () {
         var newTask = document.getElementById("newTask").value;
-        _this3.updateData(newTask);
-        console.log(newTask);
-        console.log(_this3.data);
+        // this.addTaskToObj(newTask);
+        _this4.updateData(newTask);
+        // console.log(newTask);
+        // console.log(this.data);
         // taskArr.push({title: newTask});
         // console.log(typeof newTask + " helper function");
       });
     }
+
+    //  addTaskToObj(newTask){
+    //   console.log(newTask)
+    //   this.getData(data);
+    //   console.log(data);
+    //  }  
+
   }]);
 
   return ToDo;
 }();
+
 //console.log value from input field
 //update view with value
 //send task to db.json
