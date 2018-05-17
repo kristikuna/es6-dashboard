@@ -10254,14 +10254,10 @@ var ToDo = function () {
     _classCallCheck(this, ToDo);
 
     var url = 'http://localhost:4000/tasks';
+    var taskArr = [];
     var addNewTask = document.getElementById('addNewTask');
     this.getData(url);
     var list = document.getElementById("list");
-
-    var button = document.getElementById('formSubmitBtn');
-    button.addEventListener('click', function () {
-      var newTask = document.getElementById("newTask").value;
-    });
   }
 
   //get initial data
@@ -10269,12 +10265,13 @@ var ToDo = function () {
 
   _createClass(ToDo, [{
     key: 'getData',
-    value: function getData(url) {
+    value: function getData(url, data) {
       var _this = this;
 
       fetch(url).then(function (response) {
         return response.json();
       }).then(function (data) {
+        _this.watchForSubmit(newTask);
         _this.appendList(data);
       }).catch(function (error) {
         console.log('Error:', error);
@@ -10282,37 +10279,26 @@ var ToDo = function () {
     }
   }, {
     key: 'appendList',
-    value: function appendList(arr, newTask) {
-      console.log(newTask);
-      var taskArr = [];
+    value: function appendList(arr) {
       arr.forEach(function (item) {
-        // console.log(taskArr)
+        // console.log(item)
         var listItem = document.createElement('li');
         list.append(item.title, listItem);
-        taskArr.push(item.title);
-        console.log(taskArr);
       });
     }
-
-    // newTaskPost(){
-    //   button.addEventListener('click', function(){
-    //     const newTask = document.getElementById("newTask").value;
-    //     // console.log(taskArr)
-    //     console.log(newTask); 
-    //   });
-    // }
-
   }, {
     key: 'updateData',
-    value: function updateData(url, newTask) {
-      fetch(url, {
+    value: function updateData(newTask) {
+      var _this2 = this;
+
+      fetch('http://localhost:4000/tasks', {
         method: 'POST',
         headers: new Headers(),
-        body: JSON.stringify({ title: title })
+        body: JSON.stringify({ title: newTask })
       }).then(function (reponse) {
         return reponse.json();
       }).then(function (data) {
-        console.log(newTask);
+        _this2.appendList(data);
         console.log(data);
       }).catch(function (error) {
         console.log('Error:', error);
@@ -10328,6 +10314,26 @@ var ToDo = function () {
         method: 'DELETE'
       }).then(function (reponse) {
         return response.json();
+      });
+    }
+
+    //add event listner
+    //get value of input
+    //pass value into helper function
+
+  }, {
+    key: 'watchForSubmit',
+    value: function watchForSubmit(data, newTask) {
+      var _this3 = this;
+
+      var button = document.getElementById('formSubmitBtn');
+      button.addEventListener('click', function () {
+        var newTask = document.getElementById("newTask").value;
+        _this3.updateData(newTask);
+        console.log(newTask);
+        console.log(_this3.data);
+        // taskArr.push({title: newTask});
+        // console.log(typeof newTask + " helper function");
       });
     }
   }]);

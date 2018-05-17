@@ -3,56 +3,40 @@
 export default class ToDo {
   constructor() {
     const url = 'http://localhost:4000/tasks';
+    const taskArr = [];
     const addNewTask = document.getElementById('addNewTask');
     this.getData(url);
     const list = document.getElementById("list");
-
-
-    const button = document.getElementById('formSubmitBtn');
-    button.addEventListener('click', function(){
-      const newTask = document.getElementById("newTask").value;
-    });
   }
-
+  
   //get initial data
-  getData(url) {
+  getData(url, data) {
    fetch(url)
       .then(response => response.json())
       .then(data => {
+        this.watchForSubmit(newTask);
         this.appendList(data);
       }).catch(error => {
         console.log('Error:', error);
       });
   };
 
-  appendList(arr, newTask){
-    console.log(newTask);
-    const taskArr = [];
+  appendList(arr){
     arr.forEach(function(item){
-      // console.log(taskArr)
+      // console.log(item)
       let listItem = document.createElement('li');
       list.append(item.title, listItem);
-      taskArr.push(item.title);
-      console.log(taskArr);
     });
   }
 
-  // newTaskPost(){
-  //   button.addEventListener('click', function(){
-  //     const newTask = document.getElementById("newTask").value;
-  //     // console.log(taskArr)
-  //     console.log(newTask); 
-  //   });
-  // }
-
-   updateData(url, newTask){
-    fetch(url, {
+   updateData(newTask){
+    fetch('http://localhost:4000/tasks', {
      method: 'POST',
      headers : new Headers(),
-     body: JSON.stringify({ title: title })
+     body: JSON.stringify( { title: newTask } )
     }).then(reponse => reponse.json())
       .then(data => {
-        console.log(newTask)
+        this.appendList(data);
         console.log(data);
       }).catch(error => {
         console.log('Error:', error);
@@ -63,8 +47,22 @@ export default class ToDo {
     deleteData(url, id) {
       return fetch (url + '/' + id,{
         method: 'DELETE'
-    })
-    .then(reponse => response.json());
+    }).then(reponse => response.json());
+   }
+
+    //add event listner
+    //get value of input
+    //pass value into helper function
+     watchForSubmit(data, newTask) {
+      const button = document.getElementById('formSubmitBtn');
+      button.addEventListener('click', ()=> {
+        const newTask = document.getElementById("newTask").value;
+        this.updateData(newTask);
+        console.log(newTask);
+        console.log(this.data);
+        // taskArr.push({title: newTask});
+        // console.log(typeof newTask + " helper function");
+     });
    }
   }
   //console.log value from input field
@@ -72,4 +70,3 @@ export default class ToDo {
   //send task to db.json
   //update view with value from db
 
-  
