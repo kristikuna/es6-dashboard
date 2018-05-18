@@ -10258,6 +10258,7 @@ var ToDo = function () {
     var addNewTask = document.getElementById('addNewTask');
     this.getData(url);
     this.list = document.getElementById("list");
+    this.watchForSubmit(newTask);
   }
 
   //get initial data
@@ -10271,7 +10272,6 @@ var ToDo = function () {
       fetch('http://localhost:4000/tasks').then(function (response) {
         return response.json();
       }).then(function (data) {
-        _this.watchForSubmit(newTask);
         // console.log(newTask);
         _this.appendList(data);
         // console.log(data);
@@ -10280,13 +10280,30 @@ var ToDo = function () {
       });
     }
   }, {
+    key: 'clearDom',
+    value: function clearDom(data) {
+      while (this.list.firstChild) {
+        this.list.removeChild(this.list.firstChild);
+      }
+    }
+  }, {
     key: 'appendList',
+
+
+    //    addTaskToObj(newTask){
+    //   console.log(newTask)
+    //   this.getData(data);
+    //   console.log(data);
+    //  }  
+
+
     value: function appendList(arr) {
       var _this2 = this;
 
       console.log(arr);
+      this.clearDom();
       arr.forEach(function (item) {
-        console.log(item);
+        // console.log(item)
         var listItem = document.createElement('li');
         _this2.list.appendChild(listItem);
         listItem.innerText = item.title;
@@ -10294,22 +10311,20 @@ var ToDo = function () {
     }
   }, {
     key: 'updateData',
-    value: function updateData(newTask) {
+    value: function updateData(task) {
       var _this3 = this;
 
-      console.log(newTask);
+      // console.log(newTask);
       var postConfig = {
         method: 'POST',
         headers: {
-          'Accept': 'Application/JSON, Text/Plain, */*',
-          'Content': "Application/JSON"
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ title: newTask })
+        body: JSON.stringify({ title: task })
       };
-      fetch('http://localhost:4000/tasks', postConfig).then(function (reponse) {
-        return reponse.json();
-      }).then(function (res) {
-        _this3.appendList(newTask);
+      fetch('http://localhost:4000/tasks', postConfig).then(function (resolve) {
+        _this3.getData();
       });
       //.catch(error => {
       //   console.log('Error:', error);
@@ -10334,7 +10349,7 @@ var ToDo = function () {
 
   }, {
     key: 'watchForSubmit',
-    value: function watchForSubmit(data, newTask) {
+    value: function watchForSubmit(newTask) {
       var _this4 = this;
 
       var button = document.getElementById('formSubmitBtn');
@@ -10342,19 +10357,13 @@ var ToDo = function () {
         var newTask = document.getElementById("newTask").value;
         // this.addTaskToObj(newTask);
         _this4.updateData(newTask);
-        // console.log(newTask);
+        console.log(newTask);
+        document.getElementById("newTask").value = "";
         // console.log(this.data);
         // taskArr.push({title: newTask});
         // console.log(typeof newTask + " helper function");
       });
     }
-
-    //  addTaskToObj(newTask){
-    //   console.log(newTask)
-    //   this.getData(data);
-    //   console.log(data);
-    //  }  
-
   }]);
 
   return ToDo;

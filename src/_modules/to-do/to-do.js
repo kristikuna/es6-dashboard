@@ -7,6 +7,7 @@ export default class ToDo {
     const addNewTask = document.getElementById('addNewTask');
     this.getData(url);
     this.list = document.getElementById("list");
+    this.watchForSubmit(newTask)
   }
   
   //get initial data
@@ -14,7 +15,6 @@ export default class ToDo {
    fetch('http://localhost:4000/tasks')
       .then(response => response.json())
       .then(data => {
-        this.watchForSubmit(newTask);
         // console.log(newTask);
         this.appendList(data);
         // console.log(data);
@@ -23,31 +23,45 @@ export default class ToDo {
       });
   };
 
+  clearDom(data){
+    while(this.list.firstChild){
+      this.list.removeChild(this.list.firstChild);
+    }
+  };
+
+  //    addTaskToObj(newTask){
+  //   console.log(newTask)
+  //   this.getData(data);
+  //   console.log(data);
+  //  }  
+
+
   appendList(arr){
     console.log(arr)
+    this.clearDom();
     arr.forEach((item)=>{
-      console.log(item)
+      // console.log(item)
       let listItem = document.createElement('li');
       this.list.appendChild(listItem);
       listItem.innerText = item.title
     });
   }
 
-   updateData(newTask){
-    console.log(newTask);
+   updateData(task){
+
+    // console.log(newTask);
     const postConfig = {
       method: 'POST',
       headers : {
-       'Accept': 'Application/JSON, Text/Plain, */*',
-       'Content': "Application/JSON"
+       'Accept': 'application/json, text/plain, */*',
+       'Content-Type': 'application/json'
       },
-       body: JSON.stringify( { title: newTask } )
+       body: JSON.stringify({ title: task })
     }
     fetch('http://localhost:4000/tasks', postConfig)
-    .then(reponse => reponse.json())
-      .then((res) => {
-        this.appendList(newTask)
-      })
+    .then((resolve) =>{
+      this.getData()
+    })
       //.catch(error => {
       //   console.log('Error:', error);
       // });
@@ -63,24 +77,21 @@ export default class ToDo {
     //add event listner
     //get value of input
     //pass value into helper function
-     watchForSubmit(data, newTask) {
+     watchForSubmit(newTask) {
       const button = document.getElementById('formSubmitBtn');
       button.addEventListener('click', ()=> {
-        const newTask = document.getElementById("newTask").value;
+        let newTask = document.getElementById("newTask").value;
         // this.addTaskToObj(newTask);
         this.updateData(newTask);
-        // console.log(newTask);
+        console.log(newTask);
+        document.getElementById("newTask").value = "";
         // console.log(this.data);
         // taskArr.push({title: newTask});
         // console.log(typeof newTask + " helper function");
      });
    }
 
-  //  addTaskToObj(newTask){
-  //   console.log(newTask)
-  //   this.getData(data);
-  //   console.log(data);
-  //  }  
+
   }
 
   //console.log value from input field
