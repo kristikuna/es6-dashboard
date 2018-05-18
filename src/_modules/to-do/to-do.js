@@ -1,18 +1,16 @@
-
-
 export default class ToDo {
   constructor() {
     const url = 'http://localhost:4000/tasks';
-    const taskArr = [];
     const addNewTask = document.getElementById('addNewTask');
     this.getData(url);
     this.list = document.getElementById("list");
+
     this.watchForSubmit(newTask)
   }
-  
+
   //get initial data
   getData(data) {
-   fetch('http://localhost:4000/tasks')
+    fetch('http://localhost:4000/tasks')
       .then(response => response.json())
       .then(data => {
         this.appendList(data);
@@ -21,58 +19,66 @@ export default class ToDo {
       });
   };
 
-  clearDom(data){
-    while(this.list.firstChild){
+  clearDom(data) {
+    while (this.list.firstChild) {
       this.list.removeChild(this.list.firstChild);
     }
   };
 
-  appendList(arr){
+  appendList(arr) {
     this.clearDom();
-    arr.forEach((item)=>{
-      let closeButton = document.createElement('span');
+    arr.forEach((item) => {
+
       let listItem = document.createElement('li');
-      closeButton.innerText = 'x';
-      this.list.appendChild(listItem);
+      let closeButton = document.createElement('span');
+      closeButton.innerText = " x";
       listItem.innerText = item.title;
-      console.log(listItem);
-      
+      this.list.appendChild(listItem);
+      listItem.appendChild(closeButton);
+      // closeButton
+      // console.log(closeButton);
+
     });
   }
+removeTask(){
+  closeButton.addEventListener('click', () => {
+    console.log("clicked");
+  });
+}
 
-   updateData(task){
+  updateData(task) {
     const postConfig = {
       method: 'POST',
-      headers : {
-       'Accept': 'application/json, text/plain, */*',
-       'Content-Type': 'application/json'
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
       },
-       body: JSON.stringify({ title: task })
+      body: JSON.stringify({ title: task })
     }
     fetch('http://localhost:4000/tasks', postConfig)
-    .then((resolve) =>{
-      this.getData()
-    }).catch(error => {
+      .then((resolve) => {
+        this.getData()
+      }).catch(error => {
         console.log('Error:', error);
       });
-    }
-
-    //delete task
-    deleteData(url, id) {
-      return fetch (url + '/' + id,{
-        method: 'DELETE'
-    }).then(reponse => response.json());
-   }
-
-    //add event listner
-    //get value of input
-    //pass value into helper function
-     watchForSubmit(newTask) {
-      const button = document.getElementById('formSubmitBtn');
-      button.addEventListener('click', ()=> {
-        let newTask = document.getElementById("newTask").value;
-        this.updateData(newTask);
-        document.getElementById("newTask").value = "";
-     });
-   }
   }
+
+  //delete task
+  deleteData(url, id) {
+    return fetch(url + '/' + id, {
+      method: 'DELETE'
+    }).then(reponse => response.json());
+  }
+
+  //add event listner
+  //get value of input
+  //pass value into helper function
+  watchForSubmit(newTask) {
+    const button = document.getElementById('formSubmitBtn');
+    button.addEventListener('click', () => {
+      let newTask = document.getElementById("newTask").value;
+      this.updateData(newTask);
+      document.getElementById("newTask").value = "";
+    });
+  }
+}

@@ -1,17 +1,11 @@
-{% extends '_layouts/base.nunjucks' %}
-
-{% import "_modules/link/link.nunjucks" as link %}
-
-{% block content %}
-    <div class="main-container">
-
-      <h1>TODO list</h1>
-      <ul id="list"></ul>
-
-      <form id="postTask">
-        <input type="text" id="newTask"/>
-        <button id="formSubmitBtn" type="submit">Add todo!</button>
-      </form>
-
-    </div>
+{% extends '_layouts/base.nunjucks' %} {% import "_modules/link/link.nunjucks" as link %} {% block content %}
+<div class="main-container">
+  <h1>TODO list</h1>
+  <ul id="list">
+  </ul>
+  <form id="postTask">
+    <input type="text" id="newTask" />
+    <button id="formSubmitBtn" type="submit">Add todo!</button>
+  </form>
+</div>
 {% endblock %}

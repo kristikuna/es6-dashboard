@@ -10254,10 +10254,10 @@ var ToDo = function () {
     _classCallCheck(this, ToDo);
 
     var url = 'http://localhost:4000/tasks';
-    var taskArr = [];
     var addNewTask = document.getElementById('addNewTask');
     this.getData(url);
     this.list = document.getElementById("list");
+
     this.watchForSubmit(newTask);
   }
 
@@ -10291,12 +10291,22 @@ var ToDo = function () {
 
       this.clearDom();
       arr.forEach(function (item) {
-        var closeButton = document.createElement('span');
+
         var listItem = document.createElement('li');
-        closeButton.innerText = 'x';
-        _this2.list.appendChild(listItem);
+        var closeButton = document.createElement('span');
+        closeButton.innerText = " x";
         listItem.innerText = item.title;
-        console.log(listItem);
+        _this2.list.appendChild(listItem);
+        listItem.appendChild(closeButton);
+        // closeButton
+        // console.log(closeButton);
+      });
+    }
+  }, {
+    key: 'removeTask',
+    value: function removeTask() {
+      closeButton.addEventListener('click', function () {
+        console.log("clicked");
       });
     }
   }, {
