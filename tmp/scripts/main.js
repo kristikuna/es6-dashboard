@@ -10292,8 +10292,9 @@ var ToDo = function () {
       this.clearDom();
       arr.forEach(function (item) {
         var listItem = document.createElement('li');
-        var closeButton = document.createElement('button');
-        closeButton.innerText = 'X';
+        var closeButton = document.createElement('span');
+        // debugger;
+        closeButton.innerHTML += '<button onclick="removeTask()">X</button>';
         listItem.innerText = item.title;
         _this2.list.appendChild(listItem);
         listItem.appendChild(closeButton);
@@ -10302,10 +10303,10 @@ var ToDo = function () {
   }, {
     key: 'removeTask',
     value: function removeTask() {
-      var deleteEventBtn = document.getElementsByTagName('button');
-      deleteEventBtn.addEventListener('click', function () {
-        console.log("clicked");
-      });
+      // const deleteEventBtn = document.getElementsByTagName('span');
+      // deleteEventBtn.onclick = () => {
+      console.log("clicked");
+      //  };
     }
   }, {
     key: 'updateData',

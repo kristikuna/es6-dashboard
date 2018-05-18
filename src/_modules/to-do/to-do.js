@@ -29,8 +29,9 @@ export default class ToDo {
     this.clearDom();
     arr.forEach((item) => {
       let listItem = document.createElement('li');
-      let closeButton = document.createElement('button');
-      closeButton.innerText = 'X';
+      let closeButton = document.createElement('span');
+      // debugger;
+      closeButton.innerHTML += '<button onclick="removeTask()">X</button>';
       listItem.innerText = item.title;
       this.list.appendChild(listItem);
       listItem.appendChild(closeButton);
@@ -38,10 +39,10 @@ export default class ToDo {
   }
 
   removeTask(){
-    const deleteEventBtn = document.getElementsByTagName('button');
-    deleteEventBtn.addEventListener('click', () => {
+    // const deleteEventBtn = document.getElementsByTagName('span');
+    // deleteEventBtn.onclick = () => {
       console.log("clicked");
-   });
+  //  };
   }
 
   updateData(task) {
