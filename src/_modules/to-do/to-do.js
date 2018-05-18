@@ -15,9 +15,7 @@ export default class ToDo {
    fetch('http://localhost:4000/tasks')
       .then(response => response.json())
       .then(data => {
-        // console.log(newTask);
         this.appendList(data);
-        // console.log(data);
       }).catch(error => {
         console.log('Error:', error);
       });
@@ -29,27 +27,20 @@ export default class ToDo {
     }
   };
 
-  //    addTaskToObj(newTask){
-  //   console.log(newTask)
-  //   this.getData(data);
-  //   console.log(data);
-  //  }  
-
-
   appendList(arr){
-    console.log(arr)
     this.clearDom();
     arr.forEach((item)=>{
-      // console.log(item)
+      let closeButton = document.createElement('span');
       let listItem = document.createElement('li');
+      closeButton.innerText = 'x';
       this.list.appendChild(listItem);
-      listItem.innerText = item.title
+      listItem.innerText = item.title;
+      console.log(listItem);
+      
     });
   }
 
    updateData(task){
-
-    // console.log(newTask);
     const postConfig = {
       method: 'POST',
       headers : {
@@ -61,10 +52,9 @@ export default class ToDo {
     fetch('http://localhost:4000/tasks', postConfig)
     .then((resolve) =>{
       this.getData()
-    })
-      //.catch(error => {
-      //   console.log('Error:', error);
-      // });
+    }).catch(error => {
+        console.log('Error:', error);
+      });
     }
 
     //delete task
@@ -81,21 +71,8 @@ export default class ToDo {
       const button = document.getElementById('formSubmitBtn');
       button.addEventListener('click', ()=> {
         let newTask = document.getElementById("newTask").value;
-        // this.addTaskToObj(newTask);
         this.updateData(newTask);
-        console.log(newTask);
         document.getElementById("newTask").value = "";
-        // console.log(this.data);
-        // taskArr.push({title: newTask});
-        // console.log(typeof newTask + " helper function");
      });
    }
-
-
   }
-
-  //console.log value from input field
-  //update view with value
-  //send task to db.json
-  //update view with value from db
-

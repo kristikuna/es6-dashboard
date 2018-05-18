@@ -10272,9 +10272,7 @@ var ToDo = function () {
       fetch('http://localhost:4000/tasks').then(function (response) {
         return response.json();
       }).then(function (data) {
-        // console.log(newTask);
         _this.appendList(data);
-        // console.log(data);
       }).catch(function (error) {
         console.log('Error:', error);
       });
@@ -10288,25 +10286,17 @@ var ToDo = function () {
     }
   }, {
     key: 'appendList',
-
-
-    //    addTaskToObj(newTask){
-    //   console.log(newTask)
-    //   this.getData(data);
-    //   console.log(data);
-    //  }  
-
-
     value: function appendList(arr) {
       var _this2 = this;
 
-      console.log(arr);
       this.clearDom();
       arr.forEach(function (item) {
-        // console.log(item)
+        var closeButton = document.createElement('span');
         var listItem = document.createElement('li');
+        closeButton.innerText = 'x';
         _this2.list.appendChild(listItem);
         listItem.innerText = item.title;
+        console.log(listItem);
       });
     }
   }, {
@@ -10314,7 +10304,6 @@ var ToDo = function () {
     value: function updateData(task) {
       var _this3 = this;
 
-      // console.log(newTask);
       var postConfig = {
         method: 'POST',
         headers: {
@@ -10325,10 +10314,9 @@ var ToDo = function () {
       };
       fetch('http://localhost:4000/tasks', postConfig).then(function (resolve) {
         _this3.getData();
+      }).catch(function (error) {
+        console.log('Error:', error);
       });
-      //.catch(error => {
-      //   console.log('Error:', error);
-      // });
     }
 
     //delete task
@@ -10355,25 +10343,14 @@ var ToDo = function () {
       var button = document.getElementById('formSubmitBtn');
       button.addEventListener('click', function () {
         var newTask = document.getElementById("newTask").value;
-        // this.addTaskToObj(newTask);
         _this4.updateData(newTask);
-        console.log(newTask);
         document.getElementById("newTask").value = "";
-        // console.log(this.data);
-        // taskArr.push({title: newTask});
-        // console.log(typeof newTask + " helper function");
       });
     }
   }]);
 
   return ToDo;
 }();
-
-//console.log value from input field
-//update view with value
-//send task to db.json
-//update view with value from db
-
 
 exports.default = ToDo;
 module.exports = exports['default'];
