@@ -10257,8 +10257,8 @@ var ToDo = function () {
     var addNewTask = document.getElementById('addNewTask');
     this.getData(url);
     this.list = document.getElementById("list");
-
     this.watchForSubmit(newTask);
+    this.removeTask();
   }
 
   //get initial data
@@ -10291,21 +10291,19 @@ var ToDo = function () {
 
       this.clearDom();
       arr.forEach(function (item) {
-
         var listItem = document.createElement('li');
-        var closeButton = document.createElement('span');
-        closeButton.innerText = " x";
+        var closeButton = document.createElement('button');
+        closeButton.innerText = 'X';
         listItem.innerText = item.title;
         _this2.list.appendChild(listItem);
         listItem.appendChild(closeButton);
-        // closeButton
-        // console.log(closeButton);
       });
     }
   }, {
     key: 'removeTask',
     value: function removeTask() {
-      closeButton.addEventListener('click', function () {
+      var deleteEventBtn = document.getElementsByTagName('button');
+      deleteEventBtn.addEventListener('click', function () {
         console.log("clicked");
       });
     }

@@ -4,8 +4,8 @@ export default class ToDo {
     const addNewTask = document.getElementById('addNewTask');
     this.getData(url);
     this.list = document.getElementById("list");
-
     this.watchForSubmit(newTask)
+    this.removeTask();
   }
 
   //get initial data
@@ -28,23 +28,21 @@ export default class ToDo {
   appendList(arr) {
     this.clearDom();
     arr.forEach((item) => {
-
       let listItem = document.createElement('li');
-      let closeButton = document.createElement('span');
-      closeButton.innerText = " x";
+      let closeButton = document.createElement('button');
+      closeButton.innerText = 'X';
       listItem.innerText = item.title;
       this.list.appendChild(listItem);
       listItem.appendChild(closeButton);
-      // closeButton
-      // console.log(closeButton);
-
     });
   }
-removeTask(){
-  closeButton.addEventListener('click', () => {
-    console.log("clicked");
-  });
-}
+
+  removeTask(){
+    const deleteEventBtn = document.getElementsByTagName('button');
+    deleteEventBtn.addEventListener('click', () => {
+      console.log("clicked");
+   });
+  }
 
   updateData(task) {
     const postConfig = {
@@ -61,7 +59,7 @@ removeTask(){
       }).catch(error => {
         console.log('Error:', error);
       });
-  }
+    }
 
   //delete task
   deleteData(url, id) {
