@@ -4,7 +4,7 @@ export default class ToDo {
     const addNewTask = document.getElementById('addNewTask');
     this.getData(url);
     this.list = document.getElementById("list");
-    this.watchForSubmit(newTask)
+    this.watchForSubmit(newTask);
     this.removeTask();
   }
 
@@ -30,19 +30,20 @@ export default class ToDo {
     arr.forEach((item) => {
       let listItem = document.createElement('li');
       let closeButton = document.createElement('span');
-      // debugger;
-      closeButton.innerHTML += '<button onclick="removeTask()">X</button>';
+      closeButton.innerHTML += '<button onclick="removeTask();" class="deleteButton">X</button>';
       listItem.innerText = item.title;
       this.list.appendChild(listItem);
       listItem.appendChild(closeButton);
+      console.log(closeButton)
+     
+      
     });
   }
-
   removeTask(){
-    // const deleteEventBtn = document.getElementsByTagName('span');
-    // deleteEventBtn.onclick = () => {
+    const deleteEventBtn = document.getElementsByClassName('deleteButton');
+    deleteEventBtn.onclick = () => {
       console.log("clicked");
-  //  };
+    };
   }
 
   updateData(task) {

@@ -10293,20 +10293,20 @@ var ToDo = function () {
       arr.forEach(function (item) {
         var listItem = document.createElement('li');
         var closeButton = document.createElement('span');
-        // debugger;
-        closeButton.innerHTML += '<button onclick="removeTask()">X</button>';
+        closeButton.innerHTML += '<button onclick="removeTask();" class="deleteButton">X</button>';
         listItem.innerText = item.title;
         _this2.list.appendChild(listItem);
         listItem.appendChild(closeButton);
+        console.log(closeButton);
       });
     }
   }, {
     key: 'removeTask',
     value: function removeTask() {
-      // const deleteEventBtn = document.getElementsByTagName('span');
-      // deleteEventBtn.onclick = () => {
-      console.log("clicked");
-      //  };
+      var deleteEventBtn = document.getElementsByClassName('deleteButton');
+      deleteEventBtn.onclick = function () {
+        console.log("clicked");
+      };
     }
   }, {
     key: 'updateData',

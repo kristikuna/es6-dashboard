@@ -1,80 +1,24 @@
 {
   "tasks": [
     {
-      "title": "build a cool to-do list",
+      "title": "hey",
       "id": 1
     },
     {
-      "title": "using only es6",
+      "title": "two",
       "id": 2
     },
     {
-      "title": "yoyoyo",
+      "title": "thre",
+      "id": 3
+    },
+    {
+      "title": "sldkjfs",
       "id": 4
     },
     {
-      "title": "hi i love es6",
+      "title": "Hi",
       "id": 5
-    },
-    {
-      "title": "adsfsd",
-      "id": 6
-    },
-    {
-      "title": "rtrtr",
-      "id": 7
-    },
-    {
-      "title": "wewe",
-      "id": 8
-    },
-    {
-      "title": "ssdw",
-      "id": 9
-    },
-    {
-      "title": "wdw",
-      "id": 10
-    },
-    {
-      "title": "wdw",
-      "id": 11
-    },
-    {
-      "title": "edfe",
-      "id": 12
-    },
-    {
-      "title": "er",
-      "id": 13
-    },
-    {
-      "title": "asdkfjsa",
-      "id": 14
-    },
-    {
-      "title": "sws",
-      "id": 15
-    },
-    {
-      "title": "",
-      "id": 16
-    },
-    {
-      "title": "asds",
-      "id": 17
-    },
-    {
-      "title": "",
-      "id": 18
-    },
-    {
-      "title": "",
-      "id": 19
-    },
-    {
-      "title": "",
-      "id": 20
     }
   ]
 }
