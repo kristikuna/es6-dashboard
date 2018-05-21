@@ -5,7 +5,7 @@ export default class ToDo {
     this.getData(url);
     this.list = document.getElementById("list");
     this.watchForSubmit(newTask);
-    this.removeTask();
+    this.spanGetter();
   }
 
   //get initial data
@@ -30,21 +30,32 @@ export default class ToDo {
     arr.forEach((item) => {
       let listItem = document.createElement('li');
       let closeButton = document.createElement('span');
-      closeButton.innerHTML += '<button onclick="removeTask();" class="deleteButton">X</button>';
+      closeButton.innerHTML += '<button onclick="spanGetter()" class="delete-button">X</button>';
       listItem.innerText = item.title;
       this.list.appendChild(listItem);
       listItem.appendChild(closeButton);
-      console.log(closeButton)
-     
-      
     });
   }
-  removeTask(){
-    const deleteEventBtn = document.getElementsByClassName('deleteButton');
-    deleteEventBtn.onclick = () => {
-      console.log("clicked");
-    };
+
+  spanGetter(){
+    let self = this
+    let spans = document.getElementsByClassName('delete-button')
+    for(let i = 0; i < spans.length; i++){
+        let span = spans[i]
+        span.addEventListener('click', function(e){
+          let taskId = this.id
+          self.deleteTask(taskId)
+          console.log("clicked")
+        })
+      }
   }
+
+  // removeTask(){
+  //   const deleteEventBtn = document.getElementsByClassName('deleteButton');
+  //   deleteEventBtn.onclick = () => {
+  //     console.log("clicked");
+  //   };
+  // }
 
   updateData(task) {
     const postConfig = {

@@ -10258,7 +10258,7 @@ var ToDo = function () {
     this.getData(url);
     this.list = document.getElementById("list");
     this.watchForSubmit(newTask);
-    this.removeTask();
+    this.spanGetter();
   }
 
   //get initial data
@@ -10293,21 +10293,34 @@ var ToDo = function () {
       arr.forEach(function (item) {
         var listItem = document.createElement('li');
         var closeButton = document.createElement('span');
-        closeButton.innerHTML += '<button onclick="removeTask();" class="deleteButton">X</button>';
+        closeButton.innerHTML += '<button onclick="spanGetter()" class="delete-button">X</button>';
         listItem.innerText = item.title;
         _this2.list.appendChild(listItem);
         listItem.appendChild(closeButton);
-        console.log(closeButton);
       });
     }
   }, {
-    key: 'removeTask',
-    value: function removeTask() {
-      var deleteEventBtn = document.getElementsByClassName('deleteButton');
-      deleteEventBtn.onclick = function () {
-        console.log("clicked");
-      };
+    key: 'spanGetter',
+    value: function spanGetter() {
+      var self = this;
+      var spans = document.getElementsByClassName('delete-button');
+      for (var i = 0; i < spans.length; i++) {
+        var span = spans[i];
+        span.addEventListener('click', function (e) {
+          var taskId = this.id;
+          self.deleteTask(taskId);
+          console.log("clicked");
+        });
+      }
     }
+
+    // removeTask(){
+    //   const deleteEventBtn = document.getElementsByClassName('deleteButton');
+    //   deleteEventBtn.onclick = () => {
+    //     console.log("clicked");
+    //   };
+    // }
+
   }, {
     key: 'updateData',
     value: function updateData(task) {
